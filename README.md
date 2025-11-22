@@ -80,6 +80,10 @@ flutter build apk --release
 # Output: build/app/outputs/flutter-apk/app-release.apk
 ```
 
+## Web demo
+
+[Click here to Preview](https://acid.seedhost.eu/seedbod/flutter/snake/)
+
 ## 📦 Dependencies
 
 *   `flame`: Game engine core.

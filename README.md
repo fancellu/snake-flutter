@@ -3,6 +3,14 @@
 
 **Neon Ouroboros** is a high-octane, cyberpunk-themed twist on the classic Snake game. Hack the system, devour data shards, and breach firewalls to ascend through the security layers of the mainframe.
 
+## 📸 Screenshots
+
+![Class select menu](docs/screenshots/menu.png)
+
+| Gameplay | Game Over |
+| :---: | :---: |
+| <img src="docs/screenshots/gameplay.png" width="300" alt="Gameplay"> | <img src="docs/screenshots/game-over.png" width="300" alt="Game over"> |
+
 ## 🎮 Features
 
 *   **Roguelite Progression:** Unlock new Snake Classes (Viper, Python, Cobra) with unique stats and abilities.

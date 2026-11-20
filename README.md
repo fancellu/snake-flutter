@@ -3,6 +3,8 @@
 
 **Neon Ouroboros** is a high-octane, cyberpunk-themed twist on the classic Snake game. Hack the system, devour data shards, and breach firewalls to ascend through the security layers of the mainframe.
 
+**▶ [Play it in your browser](https://snake-flutter.vercel.app/)**
+
 ## 📸 Screenshots
 
 ![Class select menu](docs/screenshots/menu.png)
@@ -13,7 +15,7 @@
 
 ## 🎮 Features
 
-*   **Roguelite Progression:** Unlock new Snake Classes (Viper, Python, Cobra) with unique stats and abilities.
+*   **Roguelite Progression:** Unlock new Snake Classes (Viper, Python, Hydra) with unique stats and abilities.
 *   **Dynamic Gameplay:**
     *   **Firewalls:** Eat enough data shards to open the firewall and advance to the next zone.
     *   **Enemies:** Avoid or destroy security drones patrolling the grid.
@@ -52,8 +54,7 @@
 This project is built with [Flutter](https://flutter.dev) and the [Flame Engine](https://flame-engine.org).
 
 ### Prerequisites
-*   Flutter SDK (Latest Stable)
-*   Dart SDK
+*   Flutter SDK 3.50+ (stable), which includes Dart 3.14
 
 ### Running Locally
 
@@ -73,14 +74,26 @@ flutter run -d chrome
 **Windows:**
 ```bash
 flutter build windows
-# Output: build/windows/runner/Release/
+# Output: build/windows/x64/runner/Release/
 ```
 
 **Web:**
 ```bash
-flutter build web --release --base-href /your-hosting-path/
+flutter build web --release
 # Output: build/web/
+# Hosting under a sub-path? Add: --base-href /your-hosting-path/
 ```
+
+### Deploying to Vercel
+
+The repo includes a `vercel.json`, so importing it into [Vercel](https://vercel.com) needs no extra setup. Vercel's build image has no Flutter SDK, so `scripts/vercel-build.sh` downloads the pinned Flutter version and builds `build/web`.
+
+*   **Keep versions in step:** after upgrading Flutter locally, bump `FLUTTER_VERSION` in the script, or set it as an environment variable in the Vercel project.
+*   **Faster deploys:** build locally and run `vercel deploy --prebuilt` to skip the SDK download.
+*   **Test the build locally:** Vercel builds on Amazon Linux 2023, so the script can be checked in Docker:
+    ```bash
+    docker run --rm -v "$PWD":/app -w /app amazonlinux:2023 bash scripts/vercel-build.sh
+    ```
 
 **Android:**
 ```bash
@@ -88,9 +101,9 @@ flutter build apk --release
 # Output: build/app/outputs/flutter-apk/app-release.apk
 ```
 
-## Web demo
+## 🌐 Web demo
 
-[Click here to Preview](https://acid.seedhost.eu/seedbod/flutter/snake/)
+[snake-flutter.vercel.app](https://snake-flutter.vercel.app/)
 
 ## 📦 Dependencies
 
@@ -100,6 +113,8 @@ flutter build apk --release
 *   `google_fonts`: Typography.
 *   `flame_audio`: Sound effects and music.
 *   `hive` / `hive_flutter`: Save data persistence.
+*   `flutter_riverpod`: State management.
+*   `material_ui`: Material widgets (replaces the deprecated `package:flutter/material.dart`).
 
 ## 🐛 Known Issues
 
@@ -111,7 +126,7 @@ flutter build apk --release
 *   **Aggressive Play:** Risk getting close to enemies for faster food chains and higher combos.
 *   **Upgrade Synergy:** Combine Speed Demon + Magnetize for maximum combo potential.
 *   **Ghost Protocol:** Save charges for tight situations - you get 3 per pickup.
-*   **Class Selection:** Python has double growth (longer snake faster), Cobra starts with speed boost.
+*   **Class Selection:** Python starts long and slow but tough; Hydra grows twice as fast.
 
 ## 📄 License
 

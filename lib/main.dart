@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'state/meta_progression.dart';
 import 'ui/menu_screen.dart';
-import 'package:window_manager/window_manager.dart' show windowManager, WindowListener, WindowOptions, TitleBarStyle;
-import 'game/config.dart';
 import 'audio/audio_manager.dart';
-import 'package:flutter/foundation.dart'
-    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'utils/error_reporter.dart';
+import 'utils/desktop_window_stub.dart'
+    if (dart.library.io) 'utils/desktop_window_io.dart';
 import 'dart:async';
-import 'dart:io' show exit, Platform;
 
 void main() {
   runZonedGuarded(
@@ -17,33 +14,7 @@ void main() {
       await MetaProgression.init();
       await AudioManager.init();
 
-      if (!kIsWeb &&
-          (defaultTargetPlatform == TargetPlatform.windows ||
-              defaultTargetPlatform == TargetPlatform.linux ||
-              defaultTargetPlatform == TargetPlatform.macOS)) {
-        await windowManager.ensureInitialized();
-
-        const double width = GameConfig.gridWidth * GameConfig.cellSize + 20;
-        const double height = GameConfig.gridHeight * GameConfig.cellSize + 60;
-
-        WindowOptions windowOptions = const WindowOptions(
-          size: Size(width, height),
-          center: true,
-          backgroundColor: Colors.transparent,
-          skipTaskbar: false,
-          titleBarStyle: TitleBarStyle.normal,
-          title: 'Neon Ouroboros',
-        );
-
-        await windowManager.waitUntilReadyToShow(windowOptions, () async {
-          await windowManager.show();
-          await windowManager.focus();
-          await windowManager.setTitle('Neon Ouroboros');
-        });
-
-        // Force exit on window close
-        windowManager.addListener(_WindowCloseListener());
-      }
+      await setupDesktopWindow();
 
       ErrorReporter.init();
       runApp(const NeonSnakeApp());
@@ -52,15 +23,6 @@ void main() {
       ErrorReporter.log(error, stack);
     },
   );
-}
-
-class _WindowCloseListener extends WindowListener {
-  @override
-  void onWindowClose() {
-    if (!kIsWeb && Platform.isWindows) {
-      exit(0);
-    }
-  }
 }
 
 class NeonSnakeApp extends StatelessWidget {

@@ -21,14 +21,11 @@ class GamepadManager {
   final _actionController = StreamController<GamepadAction>.broadcast();
   Stream<GamepadAction> get actionStream => _actionController.stream;
 
-  bool _isListening = false;
-
   Future<void> init() async {
-    if (_isListening) return;
+    if (_subscription != null) return;
 
     try {
       _subscription = Gamepads.events.listen(_onGamepadEvent);
-      _isListening = true;
       debugPrint('GamepadManager initialized');
     } catch (e) {
       debugPrint('Error initializing GamepadManager: $e');

@@ -34,7 +34,7 @@ void main() {
         expect(game.firewall, isNotNull);
         expect(game.score, 0);
         expect(game.foodEaten, 0);
-        expect(game.children.whereType<Food>().length, 1);
+        expect(game.world.children.whereType<Food>().length, 1);
       },
     );
 
@@ -55,7 +55,7 @@ void main() {
         // Advance game loop to allow snake to move and grow
         game.update(0.2);
 
-        expect(game.score, 1);
+        expect(game.score, game.scoreMultiplier); // 1 food x class multiplier
         expect(game.foodEaten, 1);
         expect(game.snake!.body.length, greaterThan(3)); // Should grow
 
@@ -82,7 +82,7 @@ void main() {
           game.eatFood(food);
           game.update(0.1); // Process add/remove
           expect(
-            game.children.whereType<Food>().isNotEmpty,
+            game.world.children.whereType<Food>().isNotEmpty,
             true,
             reason: 'Food should exist after eating $i',
           );
@@ -92,14 +92,14 @@ void main() {
         expect(game.firewall!.isOpen, false);
 
         // Eat 5th food
-        final lastFood = game.children.whereType<Food>().first;
+        final lastFood = game.world.children.whereType<Food>().first;
         game.eatFood(lastFood);
         game.update(0.1);
 
         expect(game.foodEaten, 5);
         expect(game.firewall!.isOpen, true);
         expect(
-          game.children.whereType<Food>().isNotEmpty,
+          game.world.children.whereType<Food>().isNotEmpty,
           true,
           reason: 'Food should still exist after level completion',
         );

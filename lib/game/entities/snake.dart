@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import '../config.dart';
 import '../neon_snake_game.dart';
 import '../../state/meta_progression.dart';

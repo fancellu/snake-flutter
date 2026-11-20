@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'state/meta_progression.dart';
 import 'ui/menu_screen.dart';
 import 'audio/audio_manager.dart';

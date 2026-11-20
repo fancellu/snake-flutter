@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import '../state/meta_progression.dart';
 import 'dart:async';
 import '../input/gamepad_manager.dart';
@@ -41,12 +41,18 @@ class _MenuScreenState extends State<MenuScreen> {
     switch (action) {
       case GamepadAction.up:
         setState(() {
-          _focusedIndex = (_focusedIndex - 1).clamp(0, SnakeClass.values.length);
+          _focusedIndex = (_focusedIndex - 1).clamp(
+            0,
+            SnakeClass.values.length,
+          );
         });
         break;
       case GamepadAction.down:
         setState(() {
-          _focusedIndex = (_focusedIndex + 1).clamp(0, SnakeClass.values.length);
+          _focusedIndex = (_focusedIndex + 1).clamp(
+            0,
+            SnakeClass.values.length,
+          );
         });
         break;
       case GamepadAction.action:

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'config.dart';
 import 'entities/snake.dart';
 import 'entities/food.dart';
@@ -112,7 +112,7 @@ class NeonSnakeGame extends FlameGame
       _togglePause();
       return;
     }
-    
+
     if (isGamePaused) return;
 
     switch (action) {
@@ -199,7 +199,9 @@ class NeonSnakeGame extends FlameGame
 
     try {
       // Remove existing food
-      world.children.whereType<Food>().toList().forEach((f) => f.removeFromParent());
+      world.children.whereType<Food>().toList().forEach(
+        (f) => f.removeFromParent(),
+      );
 
       // Build available cells list
       final occupied = <Vector2>{};
@@ -443,7 +445,9 @@ class NeonSnakeGame extends FlameGame
       if (ghostProtocolCharges > 0) {
         ghostProtocolCharges--;
         if (ghostProtocolCharges == 0) hasGhostProtocol = false;
-        debugPrint("Ghost Protocol Activated (Wall)! ($ghostProtocolCharges left)");
+        debugPrint(
+          "Ghost Protocol Activated (Wall)! ($ghostProtocolCharges left)",
+        );
         if (head.x < 0) snake!.body.first.x = GameConfig.gridWidth - 1;
         if (head.x >= GameConfig.gridWidth) snake!.body.first.x = 0;
         if (head.y < 0) snake!.body.first.y = GameConfig.gridHeight - 1;
@@ -499,7 +503,7 @@ class NeonSnakeGame extends FlameGame
       comboCount++;
       comboTimer = comboWindow;
       final comboBonus = comboCount > 1 ? comboCount : 1;
-      
+
       score += comboBonus * scoreMultiplier;
       foodEaten++;
       snake!.grow();
@@ -526,11 +530,17 @@ class NeonSnakeGame extends FlameGame
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 shadows: [
-                  Shadow(blurRadius: 10, color: Colors.deepOrange, offset: Offset(0, 0)),
+                  Shadow(
+                    blurRadius: 10,
+                    color: Colors.deepOrange,
+                    offset: Offset(0, 0),
+                  ),
                 ],
               ),
             ),
-            position: f.position * GameConfig.cellSize + Vector2(GameConfig.cellSize / 2, -20),
+            position:
+                f.position * GameConfig.cellSize +
+                Vector2(GameConfig.cellSize / 2, -20),
             anchor: Anchor.center,
           )..add(RemoveEffect(delay: 1.0)),
         );

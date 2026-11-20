@@ -4,11 +4,7 @@ import 'package:flutter/painting.dart' show Size;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, TargetPlatform;
 import 'package:window_manager/window_manager.dart'
-    show
-        SizeToNative,
-        TitleBarStyle,
-        WindowCloseRequestedEvent,
-        WindowManager;
+    show SizeToNative, TitleBarStyle, WindowCloseRequestedEvent, WindowManager;
 
 import '../game/config.dart';
 

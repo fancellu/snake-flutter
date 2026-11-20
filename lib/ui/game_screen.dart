@@ -1,5 +1,5 @@
 import 'package:flame/game.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import '../game/neon_snake_game.dart';
 import 'upgrade_screen.dart';
 import 'game_over_screen.dart';

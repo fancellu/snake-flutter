@@ -43,6 +43,7 @@ dependencies:
   path_provider: ^2.1.5
   window_manager: ^0.7.0
   gamepads: ^0.1.15
+  material_ui: ^1.11.1
 
 dev_dependencies:
   flutter_test:

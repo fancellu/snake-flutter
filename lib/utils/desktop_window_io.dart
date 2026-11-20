@@ -1,10 +1,14 @@
 import 'dart:io' show exit, Platform;
 
-import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart' show Size;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, TargetPlatform;
-import 'package:window_manager/legacy.dart'
-    show windowManager, WindowListener, WindowOptions, TitleBarStyle;
+import 'package:window_manager/window_manager.dart'
+    show
+        SizeToNative,
+        TitleBarStyle,
+        WindowCloseRequestedEvent,
+        WindowManager;
 
 import '../game/config.dart';
 
@@ -15,35 +19,25 @@ Future<void> setupDesktopWindow() async {
       defaultTargetPlatform != TargetPlatform.macOS) {
     return;
   }
-  await windowManager.ensureInitialized();
+
+  final window = WindowManager.instance.getCurrent();
+  if (window == null) return;
 
   const double width = GameConfig.gridWidth * GameConfig.cellSize + 20;
   const double height = GameConfig.gridHeight * GameConfig.cellSize + 60;
 
-  WindowOptions windowOptions = const WindowOptions(
-    size: Size(width, height),
-    center: true,
-    backgroundColor: Colors.transparent,
-    skipTaskbar: false,
-    titleBarStyle: TitleBarStyle.normal,
-    title: 'Neon Ouroboros',
-  );
-
-  await windowManager.waitUntilReadyToShow(windowOptions, () async {
-    await windowManager.show();
-    await windowManager.focus();
-    await windowManager.setTitle('Neon Ouroboros');
-  });
+  window
+    ..title = 'Neon Ouroboros'
+    ..titleBarStyle = TitleBarStyle.normal
+    ..setSize(const Size(width, height).toNative(), false)
+    ..center()
+    ..show()
+    ..focus();
 
   // Force exit on window close
-  windowManager.addListener(_WindowCloseListener());
-}
-
-class _WindowCloseListener extends WindowListener {
-  @override
-  void onWindowClose() {
-    if (Platform.isWindows) {
+  window.addListener((event) {
+    if (event is WindowCloseRequestedEvent && Platform.isWindows) {
       exit(0);
     }
-  }
+  });
 }
